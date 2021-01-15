@@ -1,4 +1,4 @@
-# Scrapy settings for ietf_scraping project
+# Scrapy settings for article_crawler project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,14 +7,19 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'ietf_scraping'
+BOT_NAME = 'article_crawler'
 
-SPIDER_MODULES = ['ietf_scraping.spiders']
-NEWSPIDER_MODULE = 'ietf_scraping.spiders'
+CLOSESPIDER_PAGECOUNT=10
+
+FEED_URI='articles.json'
+FEED_FORMAT='json'
+
+SPIDER_MODULES = ['article_crawler.spiders']
+NEWSPIDER_MODULE = 'article_crawler.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'ietf_scraping (+http://www.yourdomain.com)'
+#USER_AGENT = 'article_crawler (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -45,13 +50,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'ietf_scraping.middlewares.IetfScrapingSpiderMiddleware': 543,
+#    'article_crawler.middlewares.ArticleCrawlerSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'ietf_scraping.middlewares.IetfScrapingDownloaderMiddleware': 543,
+#    'article_crawler.middlewares.ArticleCrawlerDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -62,10 +67,11 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'ietf_scraping.pipelines.IetfScrapingPipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'article_crawler.pipelines.CheckItemPipeline': 100,
+    'article_crawler.pipelines.CleanDatePipeline': 200,
 
+}
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True

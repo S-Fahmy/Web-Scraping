@@ -6,7 +6,10 @@
 import scrapy
 
 
-class IetfScrapingItem(scrapy.Item):
+class Article(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    pass
+    title = scrapy.Field()
+    url = scrapy.Field()
+    last_updated = scrapy.Field()
+    
